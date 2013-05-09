@@ -56,9 +56,9 @@ package
 			
 			addChild(pathMc);
 			addChild(cant_buildMc);
-			
 			addChild(rangeMc);
 			addChild(baseMc);
+			return;
 			
 		}
 		
@@ -151,12 +151,14 @@ package
 					stage.addChild(bulletMc);
 					bulletMc.addEventListener(Event.ENTER_FRAME, bulletMcEnterFrame);
 					//if (bulletMc.hitTestPoint(e.target.x, e.target.y, true))
-					if (HitTest.complexHitTestObject(bulletMc, MovieClip(e.target)))
+					//if (HitTest.complexHitTestObject(bulletMc, MovieClip(e.target)))
+					if(bulletMc.hitTestObject(MovieClip(e.target)))
 					{
 						trace(true);
 						bulletMc.parent.removeChild(bulletMc);
 						firing = false;
 						e.target.parent.removeChild(e.target);
+						
 					}
 				}
 			}
@@ -167,6 +169,9 @@ package
 		
 		private function bulletMcEnterFrame(e:Event):void 
 		{
+/*			e.target.x = stage.mouseX;
+			e.target.y = stage.mouseY;*/
+			
 			e.target.x -= 5 * Math.cos(e.target.dir);
 			e.target.y -= 5 * Math.sin(e.target.dir);
 			

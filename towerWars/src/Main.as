@@ -46,7 +46,11 @@ package
 			baseMc.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			
 			
-			//addChild(pathMc);
+			addChild(pathMc);
+			
+			addChild(rangeMc);
+			addChild(baseMc);
+			
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
 			
 		}
@@ -57,9 +61,11 @@ package
 			{
 				e.target.x = stage.mouseX;
 				e.target.y = stage.mouseY;
-				rangeMc.alpha = 100;
+				rangeMc.alpha = 1;
 				canBePlaced = true;
-				if(cant_buildMc.hitTestPoint(
+				rangeMc.x=e.target.x;
+				rangeMc.y=e.target.y;
+				//if(cant_buildMc.hitTestPoint(
 			}
 		}
 		

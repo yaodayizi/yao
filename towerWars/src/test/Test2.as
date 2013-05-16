@@ -2,6 +2,7 @@ package test
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.text.TextField;
 	/**
 	 * ...
 	 * @author yaoyi
@@ -11,6 +12,7 @@ package test
 		private var baseMc:base;
 		private var canBuildMc:cant_build;
 		private var rangeMc:range;
+		private var txt:TextField;
 		public function Test2() 
 		{
 			baseMc = new base();
@@ -18,7 +20,9 @@ package test
 			rangeMc = new range();
 			addChild(canBuildMc);
 			addChild(baseMc);
-			
+			txt = new TextField();
+			txt.text ="false";
+			addChild(txt);
 			baseMc.addEventListener(Event.ENTER_FRAME, baseEnterFrameHandler);
 		}
 		
@@ -26,9 +30,16 @@ package test
 		{
 			baseMc.x = stage.mouseX;
 			baseMc.y = stage.mouseY;
-			if (baseMc.hitTestObject(canBuildMc))
+			if (canBuildMc.hitTestPoint(baseMc.x - baseMc.width/2,baseMc.y - baseMc.height,true) || 
+				canBuildMc.hitTestPoint(baseMc.x+baseMc.width/2,baseMc.y-baseMc.height,true) ||
+				canBuildMc.hitTestPoint(baseMc.x -baseMc.width/2,baseMc.y+baseMc.width/2,true) ||
+				canBuildMc.hitTestPoint(baseMc.x+baseMc.width/2,baseMc.x+baseMc.width/2,true))
 			{
-				trace(true);
+				txt.text = "true";
+			}
+			else
+			{
+				txt.text = "false";
 			}
 		}
 		

@@ -27,7 +27,7 @@ package
 		private var newMonster:uint = 0;
 		private var monstersPlaced:Number = 0;
 		private var firing:Boolean = false;
-		
+		private var bulletMc:bullet;
 		
 		public function Main():void 
 		{
@@ -144,7 +144,7 @@ package
 				if (distance <= baseRange/2 && !firing)
 				{
 					firing = true;
-					var bulletMc:bullet = new bullet();
+					bulletMc = new bullet();
 					bulletMc.x = baseMc.x;
 					bulletMc.y = baseMc.y;
 					bulletMc.dir = Math.atan2(point.y, point.x);
@@ -152,18 +152,23 @@ package
 					bulletMc.addEventListener(Event.ENTER_FRAME, bulletMcEnterFrame);
 					//if (bulletMc.hitTestPoint(e.target.x, e.target.y, true))
 					//if (HitTest.complexHitTestObject(bulletMc, MovieClip(e.target)))
-					if(bulletMc.hitTestObject(MovieClip(e.target)))
-					{
-						trace(true);
-						bulletMc.parent.removeChild(bulletMc);
-						firing = false;
-						e.target.parent.removeChild(e.target);
-						
-					}
+
 				}
 			}
 			
-			
+			if(bulletMc!=null && bulletMc.hitTestObject(MovieClip(e.target)))
+			{
+				trace(true);
+				if(bulletMc.parent!=null)
+					bulletMc.parent.removeChild(bulletMc);
+				
+				if (e.target.parent != null)
+				{
+					e.target.parent.removeChild(e.target);
+					firing = false;
+				}
+				
+			}
 			
 		}
 		
@@ -178,7 +183,8 @@ package
 			if (e.target.x < 0 || e.target.y < 0 || e.target.x > stage.stageWidth || e.target.y > stage.stageHeight)
 			{
 				e.target.removeEventListener(Event.ENTER_FRAME, bulletMcEnterFrame);
-				e.target.parent.removeChild(e.target);
+				if(e.target.parent!=null)
+					e.target.parent.removeChild(e.target);
 				firing = false;
 			}
 		}

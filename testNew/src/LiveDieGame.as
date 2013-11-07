@@ -6,10 +6,13 @@ package
 	import com.bit101.components.Text;
 	import com.foed.Vector2D;
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.InteractiveObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	/**
 	 * ...
 	 * @author yaoyi
@@ -18,14 +21,15 @@ package
 	{
 		private var mapWidth:uint = 48;
 		private var mapHeight:uint = 48;
-		private var chanceToStartAlive:Number = .45;
+		private var chanceToStartAlive:Number = .4;
 		private var deathLimit:uint = 3;
 		private var birthLimit:uint = 4;
 		private var tileSize:uint = 8;
-		private var  numberOfSteps:uint = 1;
+		private var  numberOfSteps:uint = 2;
 		private var bitmap:Bitmap;
 		private var shape:Shape;
 		private var map:Array;
+		private var tmpBitmapdata:BitmapData
 		
 		public function LiveDieGame() 
 		{
@@ -76,14 +80,29 @@ package
 			});
 			
 			shape.y = 200;
-			
+			addChild(shape);
 
-			shape.graphics.lineStyle(0, 0x499300);
+			//shape.graphics.lineStyle(0, 0xFF0000);
 			shape.graphics.beginFill(0x499300);
-			shape.graphics.drawRect(x * tileSize, y * tileSize, tileSize, tileSize);
+			shape.graphics.drawRect(0, 0, tileSize, tileSize);
 			shape.graphics.endFill();
 			
-			addChild(shape);
+/*			shape.graphics.beginFill(0x000000);
+			shape.graphics.drawRect(8, 0, tileSize, tileSize);
+			shape.graphics.endFill();*/
+			
+			
+			tmpBitmapdata = new BitmapData(16, 8, 1, 0x000000);
+			tmpBitmapdata.draw(shape);
+			
+			
+			
+			bitmap.bitmapData = new BitmapData(tileSize * mapWidth, tileSize * mapHeight, false, 0x000000);
+			bitmap.y = 210;
+			
+			
+			addChild(bitmap);
+			//addChild(shape);
 			//var map:Array = generateMap();
 			//drawMap(map);
 		}
@@ -91,6 +110,7 @@ package
 		
 		public function newWorld():void
 		{
+			map = [[]];
 			map = generateMap();
 			drawMap(map);
 		}
@@ -110,9 +130,9 @@ package
 				for (var j = 0; j < mapHeight; j++)
 				{
 					if (Math.random() > chanceToStartAlive)	
-						map[i][j] = true;
-					else
 						map[i][j] = false;
+					else
+						map[i][j] = true;
 				}
 			}
 			
@@ -187,7 +207,7 @@ package
 		
 		public function generateMap():Array
 		{
-			var cellMap = initMap();
+			var cellMap:Array = initMap();
 			for (var i = 0; i < numberOfSteps; i++)
 			{
 				cellMap = doSimulationStep(cellMap);
@@ -198,16 +218,23 @@ package
 		
 		public function drawMap(map:Array):void
 		{
-			shape.graphics.clear();
+			//shape.graphics.clear();
+
+			var trueRect:Rectangle = new Rectangle(0, 0, 8, 8);
+			var falseRect:Rectangle = new Rectangle(8, 0, 8, 8);
+			var tmpRect:Rectangle;
 			for (var x:uint = 0; x < map.length; x++)
 			{
 				for (var y:uint = 0; y < map[0].length; y++)
 				{
-					var color:uint = map[x][y] ? 0x499300 : 0x000000;
-					shape.graphics.lineStyle(0, color);
+					tmpRect = map[x][y] ? trueRect :falseRect;
+					/*	shape.graphics.lineStyle(0, color);
 					shape.graphics.beginFill(color);
 					shape.graphics.drawRect(x * tileSize, y * tileSize, tileSize, tileSize);
-					shape.graphics.endFill();
+					shape.graphics.endFill();*/
+
+					bitmap.bitmapData.copyPixels(tmpBitmapdata, tmpRect, new Point(x * tileSize, y * tileSize));
+
 				}
 			}
 		}

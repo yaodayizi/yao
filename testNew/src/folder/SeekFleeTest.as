@@ -29,7 +29,7 @@ package folder
 			
 			_fleer = new SteeredVehicle();
 			_fleer.position = new Vector2D(400, 300);
-			_fleer.edgeBehavior = Vehicle.WRAP;
+			_fleer.edgeBehavior = Vehicle.BOUNCE;
 			_fleer.maxSpeed = 5;
 			_fleer.mass = 1;
 			addChild(_fleer);

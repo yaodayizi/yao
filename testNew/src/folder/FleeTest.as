@@ -20,6 +20,8 @@ package folder
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			_vehicle = new SteeredVehicle();
+			_vehicle.x = 100;
+			_vehicle.y = 100;
 			addChild(_vehicle);
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
 			

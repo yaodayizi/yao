@@ -24,12 +24,15 @@ package
 		 * 超过这个值矿工就想睡觉了
 		 */
 		private const TirednessThreshold = 5;
-		private var _CurrentState:State;
+		private var _currentState:State;
 		private var _location:LocationType;
 		/**
 		 * 有多少矿在口袋里
 		 */
 		private var _goldCarried:int;
+		/**
+		 * 多少钱在银行
+		 */
 		private var _moneyInBank:int;
 		/**
 		 * 口渴
@@ -47,7 +50,11 @@ package
 		override public function update():void
 		{
 			_thirst += 1;
-			i
+			if (_currentState)
+			{
+				_currentState.execute(this);
+			}
+			
 		}
 		
 		public  function changeState(newState:State):void

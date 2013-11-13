@@ -1,7 +1,7 @@
 package  
 {
 	import org.flixel.system.FlxPreloader;
-	
+	import Jumper;
 	/**
 	 * ...
 	 * @author yaoyi
@@ -13,7 +13,7 @@ package
 		
 		public function Preloader() 
 		{
-			className = "Main";
+			className = "Jumper";
 			super();
 			
 		}

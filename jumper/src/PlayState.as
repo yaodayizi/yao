@@ -55,7 +55,9 @@ package
 			backgroundMap.scrollFactor.x = backgroundMap.scrollFactor.y = .5;
 			
 			gibs = new FlxEmitter();
-			
+			gibs.setXSpeed( -150, 150);
+			gibs.setYSpeed( -200, 0);
+			gibs.setRotation( -720, -720);
 			
 			add(player = new Player(5, 670));
 			add(selMonsta = new Enemy(player,271, 687));

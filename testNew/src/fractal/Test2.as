@@ -13,13 +13,16 @@ package fractal
 		public function Test2() 
 		{
 			lines = new Vector.<KochLine>();
-			var a:Vector2D = new Vector2D(0, 173);
-			var b:Vector2D = new Vector2D(stage.stageWidth, 173);
-			var c:Vector2D = new Vector2D(stage.stageWidth / 2, 173 + width * Math.cos(30 * Math.PI / 180));
+			var width:int = 200;
+/*			var a:Vector2D = new Vector2D(0, 173);
+			var b:Vector2D = new Vector2D(200, 173);
+			var c:Vector2D = new Vector2D(200 / 2, 173 + 200 * -Math.cos(30 * Math.PI / 180));*/
+			var a:Vector2D = new Vector2D(0, 200);
+			var b:Vector2D = new Vector2D(stage.stageWidth, 200);
 			lines.push(new KochLine(a, b));
-			lines.push(new KochLine(b, c));
-			lines.push(new KochLine(c, a));
-			for (var i:int = 0; i < 5;i++)
+			//lines.push(new KochLine(b, c));
+			//lines.push(new KochLine(c, a));
+			for (var i:int = 0; i < 2;i++)
 			{
 				generate();
 				
@@ -42,7 +45,7 @@ package fractal
 		public function generate():void
 		{
 			var next:Vector.<KochLine> = new Vector.<KochLine>();
-			for (var i = 0; i < lines.length; i++)
+			for (var i:int = 0; i < lines.length; i++)
 			{
 				var l:KochLine = KochLine(lines[i]);
 				var a:Vector2D = l.kochA();

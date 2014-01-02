@@ -20,8 +20,10 @@ package fractal
 		public function display():void
 		{
 			graphics.lineStyle(2);
+			trace(start.x, start.y,"end:",end.x,end.y);
 			graphics.moveTo(start.x, start.y);
 			graphics.lineTo(end.x, end.y);
+			
 		}
 		
 		
@@ -34,9 +36,9 @@ package fractal
 		{
 			var v:Vector2D = end.subtract(start);
 			//除以3
-			v.divide(3);
+			v = v.divide(3);
 			//加上开始的距离
-			v.add(start);
+			v = v.add(start);
 			return v;
 		}
 		
@@ -44,8 +46,8 @@ package fractal
 		{
 			var v:Vector2D = end.subtract(start);
 			//d点在线段的三分之二处
-			v.multiply(2 / 3.0);
-			v.add(start);
+			v = v.multiply(2 / 3.0);
+			v = v.add(start);
 			return v;
 		}
 		
@@ -53,11 +55,11 @@ package fractal
 		{
 			var a:Vector2D = start.clone();
 			var v:Vector2D = end.subtract(start);
-			v.divide(3);
-			a.add(v);
+			v = v.divide(3);
+			a = a.add(v);
 			
-			v.angle = 60*Math.PI/180;
-			a.add(v);
+			v.angle = (v.angle-60)*Math.PI/180;
+			a = a.add(v);
 			return a;
 		}
 		
